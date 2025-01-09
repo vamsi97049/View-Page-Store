@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cyberpunk Login</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      font-family: 'Roboto', sans-serif;
+      background-color: #121212;
+    }
+
+    .container {
+      text-align: center;
+      background: rgba(0, 0, 0, 0.8);
+      border-radius: 15px;
+      padding: 40px;
+      box-shadow: 0 15px 30px rgba(0, 255, 255, 0.3);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      max-width: 400px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    h1 {
+      color: #0ff;
+      font-size: 42px;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+    }
+
+    input {
+      background: transparent;
+      border: 2px solid #0ff;
+      padding: 15px 20px;
+      width: 250px;
+      margin: 10px 0;
+      color: #0ff;
+      font-size: 18px;
+      border-radius: 5px;
+      outline: none;
+      transition: 0.3s ease;
+    }
+
+    input:focus {
+      border-color: #ff00ff;
+      box-shadow: 0 0 20px rgba(255, 0, 255, 0.7);
+    }
+
+    .submit-btn {
+      background: #0ff;
+      border: none;
+      color: #121212;
+      padding: 12px 40px;
+      border-radius: 25px;
+      font-size: 18px;
+      cursor: pointer;
+      transition: 0.4s ease;
+      margin-top: 20px;
+    }
+
+    .submit-btn:hover {
+      background: #ff00ff;
+      box-shadow: 0 0 25px rgba(255, 0, 255, 0.9);
+    }
+
+    /* Smaller "Next" button styles */
+    .next-btn {
+      background: #0ff;
+      border: none;
+      color: #121212;
+      padding: 8px 20px; /* Smaller padding */
+      font-size: 16px;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: 0.4s ease;
+    }
+
+    .next-btn:hover {
+      background: #ff00ff;
+      box-shadow: 0 0 25px rgba(255, 0, 255, 0.9);
+    }
+
+    /* Error popup styles */
+    .popup {
+      display: none;
+      position: absolute;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #ff4d4d;
+      color: white;
+      padding: 15px;
+      border-radius: 5px;
+      font-size: 16px;
+      width: 90%;
+      max-width: 400px;
+      text-align: center;
+      z-index: 1000;
+      box-shadow: 0 0 15px rgba(255, 0, 255, 0.5);
+      animation: neon-glow 1.5s ease-in-out infinite;
+    }
+
+    .popup button {
+      background: transparent;
+      border: none;
+      color: white;
+      font-size: 20px;
+      cursor: pointer;
+      position: absolute;
+      top: 5px;
+      right: 10px;
+    }
+
+    @keyframes neon-glow {
+      0% {
+        text-shadow: 0 0 10px #ff00ff, 0 0 20px #ff00ff, 0 0 30px #0ff;
+      }
+      50% {
+        text-shadow: 0 0 20px #0ff, 0 0 30px #0ff, 0 0 40px #ff00ff;
+      }
+      100% {
+        text-shadow: 0 0 10px #ff00ff, 0 0 20px #ff00ff, 0 0 30px #0ff;
+      }
+    }
+
+    /* Ensures the inputs are stacked in a column format */
+    .inputs-container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      transition: 0.3s ease-in-out;
+    }
+
+    .inputs-container input {
+      margin: 10px 0;
+    }
+
+    /* Hide PIN field initially */
+    #pinContainer {
+      display: none;
+    }
+
+    /* Smooth loading transition */
+    .loading {
+      animation: fadeIn 1s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Error Popup -->
+    <div class="popup" id="errorPopup">
+      <button onclick="closePopup()">×</button>
+      <span id="popupMessage">User ID Mandatory</span>
+    </div>
+
+    <h1>Login</h1>
+
+    <!-- Inputs container for user ID and PIN -->
+    <div class="inputs-container" id="userIdContainer">
+      <input type="text" id="userid" placeholder="User ID (8 Digit ID)" required>
+      <button class="next-btn" onclick="verifyUserId()">Next</button>
+    </div>
+
+    <div class="inputs-container" id="pinContainer">
+      <input type="password" id="userpin" placeholder="PIN" required>
+      <button class="submit-btn" onclick="submitForm()">Submit</button>
+    </div>
+  </div>
+
+  <script>
+    // Restrict User ID input to numbers only
+    document.getElementById('userid').addEventListener('input', function(event) {
+      this.value = this.value.replace(/[^0-9]/g, '');
+    });
+
+    // Function to handle User ID verification and show PIN input
+    function verifyUserId() {
+      const userid = document.getElementById("userid").value;
+
+      if (!userid) {
+        showError("User ID Mandatory");
+        return;
+      }
+
+      // Add loading effect when transitioning
+      document.getElementById('userIdContainer').classList.add('loading');
+
+      setTimeout(() => {
+        // Hide the User ID container and show the PIN container
+        document.getElementById('userIdContainer').style.display = 'none';
+        document.getElementById('pinContainer').style.display = 'flex'; // Show PIN field
+        document.getElementById('pinContainer').classList.add('loading');
+      }, 1000); // Wait for the animation to complete
+    }
+
+    // Function to handle form submission and validation
+    function submitForm() {
+      const userid = document.getElementById("userid").value;
+      const userpin = document.getElementById("userpin").value;
+
+      if (!userpin) {
+        showError("PIN Mandatory");
+        return;
+      }
+
+      // If both fields are valid, proceed with form submission (example logic)
+      alert("Form Submitted: \nUser ID: " + userid + "\nPIN: " + userpin);
+    }
+
+    // Function to show the error popup
+    function showError(message) {
+      const popup = document.getElementById("errorPopup");
+      const popupMessage = document.getElementById("popupMessage");
+      popupMessage.textContent = message;
+      popup.style.display = "block";
+
+      setTimeout(() => {
+        popup.style.display = "none";
+      }, 4000); // Hide the popup after 4 seconds
+    }
+
+    // Function to close the popup manually
+    function closePopup() {
+      const popup = document.getElementById("errorPopup");
+      popup.style.display = "none";
+    }
+  </script>
+</body>
+</html>

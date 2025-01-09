@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>VK-Virtual Services</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- FontAwesome for icons -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <!-- Custom CSS -->
+  <style>
+    /* General Styles */
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f4f7fb;
+      color: #333;
+      margin-top: 80px;
+    }
+
+    /* Navbar Styling */
+    .navbar {
+      background-color: #212529; /* Dark background for the navbar */
+      border-bottom: 3px solid #28a745; /* Green border for contrast */
+    }
+
+    .navbar-brand {
+      font-size: 2rem;
+      font-weight: bold;
+      color: #28a745;
+      text-transform: uppercase;
+      transition: all 0.3s ease-in-out;
+      letter-spacing: 2px;
+    }
+
+    .navbar-brand:hover {
+      color: #ffffff; /* White color on hover for the brand */
+      transform: scale(1.1); /* Slight scaling effect for emphasis */
+    }
+
+    .navbar-toggler-icon {
+      background-color: #ffffff;
+    }
+
+    /* Navbar Links */
+    .nav-item .nav-link {
+      font-size: 1.1rem;
+      color: #333;
+      padding: 8px 20px;
+      margin: 0 10px;
+      border-radius: 5px;
+      transition: background-color 0.3s;
+    }
+
+    .nav-item .nav-link:hover {
+      background-color: #28a745;
+      color: #fff;
+    }
+
+    /* Dropdown Menu */
+    .dropdown {
+      position: relative;
+    }
+
+    .dropdown-menu {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      min-width: 200px;
+      padding: 0;
+      margin: 0;
+      background-color: #fff;
+      border-radius: 5px;
+      box-shadow: 0px 4px 8px rgba(0,0,0,0.2);
+    }
+
+    .dropdown:hover .dropdown-menu {
+      display: block;
+    }
+
+    .dropdown-item {
+      padding: 10px 20px;
+      font-size: 1rem;
+      color: #333;
+      transition: background-color 0.3s ease;
+    }
+
+    .dropdown-item:hover {
+      background-color: #28a745;
+      color: white;
+    }
+
+    /* Login / Signup Buttons */
+    .login-signup-btns a {
+      color: #fff;
+      text-decoration: none;
+      margin: 0 15px;
+      padding: 10px 25px;
+      background-color: #28a745;
+      border-radius: 30px;
+      font-weight: bold;
+      transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+
+    .login-signup-btns a:hover {
+      background-color: #218838; /* Slightly darker green on hover */
+      transform: translateY(-5px); /* Lift the button on hover */
+    }
+
+    /* Hero Section */
+    .hero-section {
+      background: linear-gradient(to right, #d0f4e6, #ffffff); /* Light gradient background */
+      color: #333;
+      text-align: center;
+      padding: 80px 20px;
+      min-height: 89vh; /* Full height to cover the viewport */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .hero-section h1 {
+      font-size: 4.8rem;
+      font-weight: bold;
+      margin-bottom: 20px;
+      font-family: 'Times New Roman', Times, serif;
+      color: rgba(32, 25, 67, 0.5);
+      animation: fadeInUp 1.5s ease-in-out;
+    }
+
+    .hero-section p {
+      font-size: 1.9rem;
+      margin-top: 20px;
+      max-width: 700px;
+      font-family: 'Times New Roman', Times, serif;
+      margin-left: auto;
+      margin-right: auto;
+      color: rgba(0, 0, 0, 0.5);
+      font-weight: 500;
+      animation: fadeInUp 2s ease-in-out;
+    }
+
+    /* About Us Section */
+    .about-section {
+      padding: 80px 20px;
+      text-align: center;
+      background-color: #f4f7fb;
+      animation: fadeIn 2s ease-in-out;
+    }
+
+    .about-section h2 {
+      font-size: 2.5rem;
+      color: #333;
+      font-weight: bold;
+    }
+
+    .about-section p {
+      font-size: 1.2rem;
+      color: #666;
+      line-height: 1.6;
+    }
+
+    /* Services Section */
+    .services-section {
+      padding: 80px 20px;
+      background-color: #ffffff;
+      text-align: center;
+      animation: fadeIn 2s ease-in-out;
+    }
+
+    .services-section h2 {
+      font-size: 2.5rem;
+      margin-bottom: 40px;
+      color: #333;
+    }
+
+    .service-card {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      border-radius: 15px;
+    }
+
+    .service-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .service-card .card-body {
+      padding: 40px;
+    }
+
+    .service-card i {
+      color: #00bfae;
+      transition: color 0.3s ease;
+    }
+
+    .service-card:hover i {
+      color: #28a745;
+    }
+
+    /* Contact Section */
+    #contact {
+      padding: 80px 20px;
+      background-color: #f4f7fb;
+      text-align: center;
+    }
+
+    .footer {
+      background-color: #212529;
+      color: white;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .footer a {
+      color: #00bfae;
+      text-decoration: none;
+    }
+
+    /* Animation */
+    @keyframes fadeIn {
+      0% { opacity: 0; }
+      100% { opacity: 1; }
+    }
+
+    @keyframes fadeInUp {
+      0% { opacity: 0; transform: translateY(20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Responsive Styles */
+    @media (max-width: 768px) {
+      .hero-section h1 {
+        font-size: 2.5rem;
+      }
+
+      .hero-section p {
+        font-size: 1.1rem;
+      }
+
+      .services-section h2 {
+        font-size: 2rem;
+      }
+
+      .about-section p {
+        font-size: 1rem;
+      }
+
+      .service-card .card-body {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top" style="background-color: #f8f9fa; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+    <div class="container">
+      <!-- Company Name (Brand) -->
+      <a class="navbar-brand" href="#" style="font-size: 1.8rem; font-weight: bold; color: #28a745; letter-spacing: 2px;">
+        VK-Virtual Services
+      </a>
+  
+      <!-- Navbar Links (aligned to the right) -->
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="#about">About</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Services
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="#">IT Solutions</a></li>
+              <li><a class="dropdown-item" href="#">Virtual Assistance</a></li>
+              <li><a class="dropdown-item" href="#">Business Growth</a></li>
+              <li><a class="dropdown-item" href="#">Consulting</a></li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#contact">Contact</a>
+          </li>
+        </ul>
+  
+        <!-- Action Buttons: Sign Up & Sign In (aligned to the right) -->
+        <div class="d-flex ms-3">
+          <a href="#" class="btn btn-outline-success me-2">Sign Up</a>
+          <a href="#" class="btn btn-outline-primary">Sign In</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+  
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="container">
+      <h1 class="display-4">Welcome to VK Virtul Services</h1>
+      <p class="lead">We Are Offering Comprehensive Solutions for your requirements.</a></p>
+    </div>
+  </section>
+
+  <!-- About Us Section -->
+  <section class="about-section" id="about">
+    <div class="container">
+      <div class="about-content">
+        <!-- Left side for the image -->
+        <div class="about-image">
+          <!-- Image description -->
+        </div>
+        
+        <!-- Right side for the text -->
+        <div class="about-text">
+          <h2>About VK-Virtual Services</h2>
+          <p>At VK-Virtual Services, we specialize in providing top-notch virtual solutions ranging from virtual assistance to IT consultation. Our team ensures seamless, efficient, and reliable services to help your business grow and thrive in the digital era.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+
+  <!-- Services Section -->
+  <section class="services-section">
+    <div class="container">
+      <h2>Our Services</h2>
+      <div class="row">
+        <div class="col-md-4">
+          <div class="card service-card shadow-sm">
+            <div class="card-body">
+              <i class="fas fa-laptop-code fa-3x mb-3"></i>
+              <h5 class="card-title">IT Solutions</h5>
+              <p class="card-text">Leverage cutting-edge technology to optimize your business operations and stay ahead of the competition.</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-md-4">
+          <div class="card service-card shadow-sm">
+            <div class="card-body">
+              <i class="fas fa-users fa-3x mb-3"></i>
+              <h5 class="card-title">Virtual Assistance</h5>
+              <p class="card-text">Our expert virtual assistants handle your tasks efficiently, giving you more time to focus on what matters most.</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-md-4">
+          <div class="card service-card shadow-sm">
+            <div class="card-body">
+              <i class="fas fa-users fa-3x mb-3"></i>
+              <h5 class="card-title">Virtual Assistance</h5>
+              <p class="card-text">Our expert virtual assistants handle your tasks efficiently, giving you more time to focus on what matters most.</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-md-4">
+          <div class="card service-card shadow-sm">
+            <div class="card-body">
+              <i class="fas fa-users fa-3x mb-3"></i>
+              <h5 class="card-title">Virtual Assistance</h5>
+              <p class="card-text">Our expert virtual assistants handle your tasks efficiently, giving you more time to focus on what matters most.</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-md-4">
+          <div class="card service-card shadow-sm">
+            <div class="card-body">
+              <i class="fas fa-users fa-3x mb-3"></i>
+              <h5 class="card-title">Virtual Assistance</h5>
+              <p class="card-text">Our expert virtual assistants handle your tasks efficiently, giving you more time to focus on what matters most.</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-md-4">
+          <div class="card service-card shadow-sm">
+            <div class="card-body">
+              <i class="fas fa-users fa-3x mb-3"></i>
+              <h5 class="card-title">Virtual Assistance</h5>
+              <p class="card-text">Our expert virtual assistants handle your tasks efficiently, giving you more time to focus on what matters most.</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-md-4">
+          <div class="card service-card shadow-sm">
+            <div class="card-body">
+              <i class="fas fa-users fa-3x mb-3"></i>
+              <h5 class="card-title">Virtual Assistance</h5>
+              <p class="card-text">Our expert virtual assistants handle your tasks efficiently, giving you more time to focus on what matters most.</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-md-4">
+          <div class="card service-card shadow-sm">
+            <div class="card-body">
+              <i class="fas fa-users fa-3x mb-3"></i>
+              <h5 class="card-title">Virtual Assistance</h5>
+              <p class="card-text">Our expert virtual assistants handle your tasks efficiently, giving you more time to focus on what matters most.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card service-card shadow-sm">
+            <div class="card-body">
+              <i class="fas fa-chart-line fa-3x mb-3"></i>
+              <h5 class="card-title">Business Growth</h5>
+              <p class="card-text">Expert consultation to drive your business growth and help you scale through innovative solutions.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact">
+    <div class="container">
+      <h2>Contact Us</h2>
+      <p>Email: info@vkvirtualservices.com</p>
+      <p>Phone: +1 123 456 7890</p>
+      <p>Address: 123 Virtual Avenue, Business City, Country</p>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>&copy; 2025 VK-Virtual Services. All rights reserved.</p>
+    <p><a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+  </footer>
+
+  <!-- Bootstrap JS and Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+  
+  <script>
+    // Save scroll position before refresh
+    window.addEventListener('beforeunload', function () {
+      localStorage.setItem('scrollPosition', window.scrollY);
+    });
+
+    // Restore scroll position after refresh
+    window.addEventListener('load', function () {
+      var scrollPosition = localStorage.getItem('scrollPosition');
+      if (scrollPosition) {
+        window.scrollTo(0, scrollPosition);
+        localStorage.removeItem('scrollPosition');
+      }
+    });
+  </script>
+
+</body>
+</html>

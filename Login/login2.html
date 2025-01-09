@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cyberpunk Login</title>
+  <style>
+    body {
+      background-color: #121212;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      font-family: 'Roboto', sans-serif;
+      overflow: hidden;
+    }
+
+    .container {
+      text-align: center;
+      background: rgba(0, 0, 0, 0.8);
+      border-radius: 15px;
+      padding: 40px;
+      box-shadow: 0 15px 30px rgba(0, 255, 255, 0.3);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+    }
+
+    h1 {
+      color: #0ff;
+      font-size: 42px;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      animation: glow 1.5s ease-in-out infinite;
+    }
+
+    input {
+      background: transparent;
+      border: 2px solid #0ff;
+      padding: 15px 20px;
+      width: 250px;
+      margin: 10px 0;
+      color: #0ff;
+      font-size: 18px;
+      border-radius: 5px;
+      outline: none;
+      transition: 0.3s ease;
+    }
+
+    input:focus {
+      border-color: #ff00ff;
+      box-shadow: 0 0 20px rgba(255, 0, 255, 0.7);
+    }
+
+    .submit-btn {
+      background: #0ff;
+      border: none;
+      color: #121212;
+      padding: 12px 40px;
+      border-radius: 25px;
+      font-size: 18px;
+      cursor: pointer;
+      transition: 0.4s ease;
+    }
+
+    .submit-btn:hover {
+      background: #ff00ff;
+      box-shadow: 0 0 25px rgba(255, 0, 255, 0.9);
+    }
+
+    /* Error popup styles */
+    .popup {
+      display: none;
+      position: absolute;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #ff4d4d;
+      color: white;
+      padding: 15px;
+      border-radius: 5px;
+      font-size: 16px;
+      width: 90%;
+      max-width: 400px;
+      text-align: center;
+      z-index: 1000;
+      box-shadow: 0 0 15px rgba(255, 0, 255, 0.5);
+    }
+
+    .popup button {
+      background: transparent;
+      border: none;
+      color: white;
+      font-size: 20px;
+      cursor: pointer;
+      position: absolute;
+      top: 5px;
+      right: 10px;
+    }
+
+    @keyframes glow {
+      0% {
+        text-shadow: 0 0 10px #0ff, 0 0 20px #0ff, 0 0 30px #ff00ff;
+      }
+      50% {
+        text-shadow: 0 0 20px #ff00ff, 0 0 30px #ff00ff, 0 0 40px #0ff;
+      }
+      100% {
+        text-shadow: 0 0 10px #0ff, 0 0 20px #0ff, 0 0 30px #ff00ff;
+      }
+    }
+
+    /* Ensures the inputs are stacked in a column format */
+    .inputs-container {
+      display: flex;
+      flex-direction: column; /* Stack inputs vertically */
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+    }
+
+    .inputs-container input {
+      margin: 10px 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Error Popup -->
+    <div class="popup" id="errorPopup">
+      <button onclick="closePopup()">×</button>
+      <span id="popupMessage">Invalid User ID. Please enter digits only.</span>
+    </div>
+
+    <h1>Login</h1>
+    <div class="inputs-container">
+      <input type="text" id="userid" placeholder="User ID (8 Digit ID)" required>
+      <input type="password" id="userpin" placeholder="PIN" required>
+    </div>
+    <br>
+    <button class="submit-btn" onclick="submitForm()">Submit</button>
+  </div>
+
+  <script>
+    // Restrict User ID input to numbers only
+    document.getElementById('userid').addEventListener('input', function(event) {
+      this.value = this.value.replace(/[^0-9]/g, '');
+    });
+
+    // Function to handle form submission and validation
+    function submitForm() {
+      const userid = document.getElementById("userid").value;
+      const userpin = document.getElementById("userpin").value;
+
+      // Validate the input fields
+      if (!userid && !userpin) {
+        showError("Invalid Attempt. Please fill out all fields.");
+        return;
+      }
+
+      if (!userid) {
+        showError("User ID is mandatory.");
+        return;
+      }
+
+      if (!userpin) {
+        showError("User PIN is mandatory.");
+        return;
+      }
+
+      // If both fields are valid, proceed with form submission (example logic)
+      alert("Form Submitted: \nUser ID: " + userid + "\nPIN: " + userpin);
+    }
+
+    // Function to show the error popup
+    function showError(message) {
+      const popup = document.getElementById("errorPopup");
+      const popupMessage = document.getElementById("popupMessage");
+      popupMessage.textContent = message;
+      popup.style.display = "block";
+
+      setTimeout(() => {
+        popup.style.display = "none";
+      }, 4000); // Hide the popup after 4 seconds
+    }
+
+    // Function to close the popup manually
+    function closePopup() {
+      const popup = document.getElementById("errorPopup");
+      popup.style.display = "none";
+    }
+  </script>
+</body>
+</html>

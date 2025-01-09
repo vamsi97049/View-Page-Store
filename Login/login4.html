@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Retro Login</title>
+  <style>
+    body {
+      background-color: #f4f7fb; /* Light pastel background */
+      font-family: 'Courier New', monospace;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      color: #333;
+    }
+
+    .login-box {
+      background-color: #ffffff; /* White background for login box */
+      padding: 40px;
+      border-radius: 10px;
+      text-align: center;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1); /* Soft shadow */
+      width: 320px;
+    }
+
+    h1 {
+      color: #5d8b97; /* Soft teal */
+      font-size: 36px;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+    }
+
+    input {
+      background: #f0f4f8; /* Soft light gray background for inputs */
+      border: 2px solid #9bc4b2; /* Light greenish-blue border */
+      padding: 14px 20px; /* Increased padding for a more spacious feel */
+      width: 100%;
+      margin: 10px 0;
+      color: #333;
+      font-size: 18px;
+      border-radius: 8px;
+      outline: none;
+      box-sizing: border-box; /* Includes padding and border in width */
+      transition: 0.3s ease;
+    }
+
+    input:focus {
+      border-color: #7a9c92; /* Darker greenish-blue border on focus */
+      box-shadow: 0 0 8px rgba(122, 156, 146, 0.4);
+    }
+
+    .submit-btn {
+      background-color: #7a9c92; /* Soft greenish color */
+      color: white;
+      padding: 16px 36px;
+      border: none;
+      border-radius: 8px;
+      font-size: 20px;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    /* Pop-up notification */
+    .popup {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background-color: #28a745; /* Green background for success message */
+      color: white;
+      padding: 15px;
+      border-radius: 5px;
+      font-size: 16px;
+      display: none;
+      z-index: 1000;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .popup-error {
+      background-color: #dc3545; /* Red background for error message */
+    }
+
+    .popup .close-btn {
+      position: absolute;
+      top: 5px;
+      right: 10px;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 18px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="login-box">
+    <h1>user login</h1>
+    <input type="text" id="userid" placeholder="User ID" required>
+    <input type="password" id="userpin" placeholder="PIN" required>
+    <br>
+    <button class="submit-btn" onclick="submitForm()">Submit</button>
+  </div>
+
+  <!-- Popup notification -->
+  <div class="popup" id="popup">
+    <button class="close-btn" onclick="closePopup()">×</button>
+    <span id="popup-message"></span>
+  </div>
+
+  <script>
+    function submitForm() {
+      const userid = document.getElementById("userid").value;
+      const userpin = document.getElementById("userpin").value;
+
+      const popup = document.getElementById("popup");
+      const messageSpan = document.getElementById("popup-message");
+
+      // Clear previous messages
+      messageSpan.textContent = '';
+      popup.classList.remove('popup-error');
+
+      // Validate the input fields
+      if (userid === '' || userpin === '') {
+        // If fields are empty, show error message
+        popup.style.display = 'block';
+        popup.classList.add('popup-error');
+        messageSpan.textContent = 'Error: Both fields are required.';
+        setTimeout(closePopup, 4000); // Close popup after 4 seconds
+      } else {
+        // If fields are valid, show success message
+        popup.style.display = 'block';
+        popup.classList.remove('popup-error');
+        messageSpan.textContent = 'Form Submitted Successfully!';
+        setTimeout(closePopup, 4000); // Close popup after 4 seconds
+      }
+    }
+
+    function closePopup() {
+      const popup = document.getElementById("popup");
+      popup.style.display = "none";
+    }
+  </script>
+
+</body>
+</html>

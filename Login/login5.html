@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Page</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #f4f4f9; /* Light grey background for subtle elegance */
+      overflow: hidden;
+    }
+
+    .form-container {
+      padding: 20px; /* Reduced padding */
+      border-radius: 8px;
+      text-align: center;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); /* Softer shadow */
+      background-color: #ffffff; /* Clean white background for the form */
+      position: absolute;
+      top: 50%;
+      right: 10%; /* Position container towards the right */
+      transform: translateY(-50%); /* Vertically center the form */
+      width: 270px; /* Reduced width */
+    }
+
+    h1 {
+      font-size: 28px; /* Smaller font size */
+      margin-bottom: 15px;
+      font-weight: 600;
+      color: #333333; /* Dark grey color for heading */
+    }
+
+    .input-container {
+      position: relative;
+      margin-bottom: 15px; /* Reduced margin */
+    }
+
+    input[type="text"], input[type="password"] {
+      background: #f9f9f9; /* Light background for the input fields */
+      border: 2px solid #cccccc; /* Soft grey border */
+      padding: 8px 12px; /* Reduced padding */
+      width: 100%; /* Full width but leaves space around the input */
+      box-sizing: border-box; /* Ensures padding is included in width */
+      font-size: 14px; /* Smaller font size */
+      border-radius: 5px;
+      color: #333333; /* Dark grey text for readability */
+      outline: none;
+    }
+
+    input[type="text"]:focus, input[type="password"]:focus {
+      border-color: #007BFF; /* Soft blue border on focus */
+      box-shadow: 0 0 8px rgba(0, 123, 255, 0.3); /* Subtle blue glow */
+    }
+
+    label {
+      position: absolute;
+      top: 50%;
+      left: 15px; /* Adjusted for smaller padding */
+      font-size: 14px; /* Smaller label size */
+      color: #cccccc; /* Soft grey label color */
+      transform: translateY(-50%); /* Keep label in the middle */
+      transition: all 0.3s ease;
+    }
+
+    input[type="text"]:focus + label, input[type="password"]:focus + label,
+    input[type="text"]:valid + label, input[type="password"]:valid + label {
+      top: -10px; /* Move label above input */
+      font-size: 12px; /* Smaller label size when focused */
+      color: #007BFF; /* Change label color on focus */
+    }
+
+    .submit-btn {
+      padding: 8px 20px; /* Smaller padding */
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 14px; /* Smaller font size */
+      width: 100%;
+      background-color: #007BFF; /* Professional blue color for the button */
+      color: white;
+      transition: 0.3s ease;
+    }
+
+    .submit-btn:hover {
+      background-color: #0056b3; /* Darker blue on hover */
+      box-shadow: 0 5px 15px rgba(0, 123, 255, 0.2);
+    }
+
+    .popup {
+      display: none;
+      position: absolute;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 12px; /* Smaller padding */
+      border-radius: 5px;
+      font-size: 14px; /* Smaller font size */
+      width: 90%;
+      max-width: 350px; /* Adjusted max-width */
+      background-color: #f8d7da; /* Soft red background for error */
+      color: #721c24; /* Dark red text for error */
+      border: 2px solid #f5c6cb;
+    }
+
+    .popup button {
+      background: transparent;
+      border: none;
+      color: #721c24;
+      font-size: 20px;
+      cursor: pointer;
+      position: absolute;
+      top: 5px;
+      right: 10px;
+    }
+
+    /* Links Styling */
+    .link-container {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 10px; /* Reduced space */
+      font-size: 12px; /* Smaller font size */
+    }
+
+    .link-container a {
+      text-decoration: none;
+      color: #007BFF; /* Blue color for the links */
+      transition: color 0.3s ease;
+    }
+
+    .link-container a:hover {
+      color: #0056b3; /* Darker blue on hover */
+    }
+
+  </style>
+</head>
+<body>
+  <div class="form-container">
+    <div class="popup" id="errorPopup">
+      <button onclick="closePopup()">×</button>
+      <span id="popupMessage">Invalid User ID. Please enter digits only.</span>
+    </div>
+    <h1>Login</h1>
+    <div class="input-container">
+      <input type="text" id="userid" placeholder=" " required>
+      <label for="userid">User ID ( 8 Digit ID)</label>
+    </div>
+    <div class="input-container">
+      <input type="password" id="userpin" placeholder=" " required>
+      <label for="userpin">PIN</label>
+    </div>
+    <button class="submit-btn" type="button" onclick="submitForm()">Submit</button>
+
+    <!-- Links for forgot password and get account -->
+    <div class="link-container">
+      <a href="#">Forgot Password?</a>
+      <a href="#">Get an Account</a>
+    </div>
+  </div>
+
+  <script>
+    // Restrict User ID to only digits
+    document.getElementById('userid').addEventListener('input', function(event) {
+      this.value = this.value.replace(/[^0-9]/g, '');
+    });
+
+    function submitForm() {
+      const userid = document.getElementById("userid").value;
+      const userpin = document.getElementById("userpin").value;
+
+      // Basic validation to ensure both fields are filled
+      if (!userid && !userpin) {
+        showError("Both fields are mandatory.");
+        return;
+      }
+
+      if (!userid) {
+        showError("User ID is mandatory.");
+        return;
+      }
+
+      if (!userpin) {
+        showError("User PIN is mandatory.");
+        return;
+      }
+
+      // If both fields are valid, simulate a successful form submission
+      console.log("Form Submitted: User ID:", userid, "PIN:", userpin);
+    }
+
+    function showError(message) {
+      const popup = document.getElementById("errorPopup");
+      const popupMessage = document.getElementById("popupMessage");
+      popupMessage.textContent = message;
+      popup.style.display = "block";
+
+      // Hide the error popup after 4 seconds
+      setTimeout(() => {
+        popup.style.display = "none";
+      }, 4000);
+    }
+
+    function closePopup() {
+      const popup = document.getElementById("errorPopup");
+      popup.style.display = "none";
+    }
+  </script>
+</body>
+</html>
