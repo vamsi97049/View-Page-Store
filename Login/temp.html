@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .tabs {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+        }
+        .tab {
+            flex: 1;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            background-color: #f4f4f9;
+            border-radius: 10px 10px 0 0;
+        }
+        .tab:hover {
+            background-color: #bbb;
+        }
+        .active {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .login-form {
+            display: none;
+        }
+        .show {
+            display: block;
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        /* Ensure input fields fit the container */
+        input[type="text"], input[type="password"] {
+            width: 100%; /* Ensures inputs fit the container width */
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+        .container {
+            max-width: 400px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body class="d-flex justify-content-center align-items-center" style="height: 100vh; background-color: #f4f4f9;">
+
+<div class="container">
+    <div class="tabs">
+        <div class="tab active" id="user-tab">User Login</div>
+        <div class="tab" id="admin-tab">Admin Login</div>
+    </div>
+
+    <!-- User Login Form -->
+    <div id="user-login" class="login-form show">
+        <h2 class="text-center">User Login</h2>
+        <form action="#" method="post" th:action="@{/user/login}" th:object="${user}">
+            <div class="mb-3">
+                <label for="userid" class="form-label">User ID:</label>
+                <input type="text" class="form-control" id="userid" name="userid" placeholder="Enter User ID" th:value="${user.userid}" required>
+            </div>
+            <div class="mb-3">
+                <label for="userpin" class="form-label">User PIN:</label>
+                <input type="password" class="form-control" id="userpin" name="userpin" placeholder="Enter User PIN" th:value="${user.userpin}" required>
+            </div>
+            <button type="submit" class="btn btn-success w-100">Login</button>
+        </form>
+    </div>
+
+    <!-- Admin Login Form -->
+    <div id="admin-login" class="login-form">
+        <h2 class="text-center">Admin Login</h2>
+        <form action="#" method="post" th:action="@{/admin/login}" th:object="${admin}">
+            <div class="mb-3">
+                <label for="adminid" class="form-label">Admin ID:</label>
+                <input type="text" class="form-control" id="adminid" name="adminid" placeholder="Enter Admin ID" th:value="${admin.adminid}" required>
+            </div>
+            <div class="mb-3">
+                <label for="adminpin" class="form-label">Admin PIN:</label>
+                <input type="password" class="form-control" id="adminpin" name="adminpin" placeholder="Enter Admin PIN" th:value="${admin.adminpin}" required>
+            </div>
+            <button type="submit" class="btn btn-success w-100">Login</button>
+        </form>
+    </div>
+</div>
+
+<!-- Bootstrap 5 JS & Popper.js -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+
+<script>
+    const userTab = document.getElementById("user-tab");
+    const adminTab = document.getElementById("admin-tab");
+    const userLogin = document.getElementById("user-login");
+    const adminLogin = document.getElementById("admin-login");
+
+    userTab.addEventListener("click", function() {
+        userTab.classList.add("active");
+        adminTab.classList.remove("active");
+        userLogin.classList.add("show");
+        adminLogin.classList.remove("show");
+    });
+
+    adminTab.addEventListener("click", function() {
+        adminTab.classList.add("active");
+        userTab.classList.remove("active");
+        adminLogin.classList.add("show");
+        userLogin.classList.remove("show");
+    });
+</script>
+
+</body>
+</html>
